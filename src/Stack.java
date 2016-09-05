@@ -4,6 +4,7 @@ import java.util.Collections;
 
 public class Stack implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String subject;
 	private int size;
 	private int nextCardOrder;

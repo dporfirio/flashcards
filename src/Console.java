@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +11,7 @@ public class Console {
 
 	private static ArrayList<Stack> theStacks;
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
 		theStacks = new ArrayList<Stack>();
 
@@ -157,6 +157,7 @@ public class Console {
 			} else
 				System.out.println("\nInvalid command");
 		}
+		scanner.close();
 	}
 
 	private static void editStack(String stackToEdit) {
@@ -218,6 +219,7 @@ public class Console {
 			} else
 				System.out.println("\nInvalid command");
 		}
+		scanner.close();
 	}
 
 }

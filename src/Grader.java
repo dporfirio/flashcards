@@ -3,14 +3,12 @@ import java.util.ArrayList;
 
 public class Grader {
 
-	private int difficulty;
 	private DecimalFormat format;
 	private ArrayList<String> correctWords;
 	private ArrayList<String> alternateWords;
 	private ArrayList<String> givenWords;
 
 	public Grader(int difficulty) {
-		this.difficulty = difficulty;
 		format = new DecimalFormat("#%");
 		correctWords = new ArrayList<String>();
 		alternateWords = new ArrayList<String>();

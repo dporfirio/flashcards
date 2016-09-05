@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Card implements Serializable, Comparable<Card> {
 
+	private static final long serialVersionUID = 1L;
 	private String front;
 	private String back;
 	private ArrayList<String> otherBacks;

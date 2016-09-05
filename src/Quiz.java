@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Quiz {
@@ -104,6 +102,7 @@ public class Quiz {
 				}
 			}
 		}
+		scanner.close();
 	}
 
 	private void furtherAnswer(String furtherAnswer, int index,
@@ -121,6 +120,7 @@ public class Quiz {
 			System.out.print("Back: ");
 			String newBack = scanner.nextLine();
 			quizStack.getCard(index).setOtherBack(newBack);
+			scanner.close();
 		} else if (furtherAnswer.equals("printanswers")) {
 			System.out.println(quizStack.getCard(index).getBack());
 			for (int i = 0; i < quizStack.getCard(index).getOtherBacks().size(); i++) {
@@ -186,6 +186,7 @@ public class Quiz {
 			exit = true;
 		}
 		System.out.println();
+		scanner.close();
 	}
 
 }
