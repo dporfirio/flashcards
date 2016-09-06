@@ -29,26 +29,32 @@ public class Console {
 				e.printStackTrace();
 			}
 		}
-		chooseAction();
+		
+		Scanner scanner = new Scanner(System.in);
+		printWelcomeMessage();
+		chooseAction(scanner);
+		scanner.close();
 	}
 
-	public static void printCommands(String commandType) {
+	public static String commandsToString(String commandType) {
 		if (commandType.equals("main")) {
-			System.out.println("commands    -    prints the commands \n"
+			return "commands    -    prints the commands \n"
 					+ "quiz        -    take flashcard quiz \n"
 					+ "newstack    -    creates a new stack \n"
+					+ "removestack -    removes specified stack \n"
 					+ "viewstacks  -    view all stacks \n"
 					+ "editcards   -    edit the cards in a stack \n"
-					+ "end         -    end the program" + "\n");
+					+ "end         -    end the program \n";
 		} else if (commandType.equals("cardeditor")) {
-			System.out.println("commands      -    prints these commands \n"
+			return "commands      -    prints these commands \n"
 					+ "addcard       -    adds a new card \n"
 					+ "removecard    -    removes card at specified index \n"
 					+ "displaycards  -    displays all cards in order \n"
 					+ "exit          -    back to main \n"
-					+ "?cancel       -    cancels the addition of a card \n"
-					+ "\n");
+					+ "?cancel       -    cancels the addition of a card \n";
 		}
+		else
+			return "command type not recognized";
 	}
 
 	public static void printStacks() {
@@ -61,15 +67,15 @@ public class Console {
 		theStacks.add(new Stack(name));
 	}
 
-	public static void chooseAction() {
-		Scanner scanner = new Scanner(System.in);
+	public static void chooseAction(Scanner scanner) {
+		//scanner = new Scanner(System.in);
 		boolean end = false;
 		while (!end) {
 			System.out.print(">  ");
 			String startCommand = scanner.next();
 
 			if (startCommand.equals("commands"))
-				printCommands("main");
+				System.out.println(commandsToString("main"));
 			else if (startCommand.equals("quiz")) {
 				printStacks();
 				System.out.print("Stack to study: ");
@@ -96,10 +102,10 @@ public class Console {
 				System.out.print("Name of stack: ");
 				String stackName = scanner.next();
 				newStack(stackName);
-				System.out.println();
+				System.out.println("\"" + stackName + "\" created\n");
 			} else if (startCommand.equals("editcards")) {
-				printStacks();
 				if (theStacks.size() > 0) {
+					printStacks();
 					System.out.print("Which stack would you like to edit? ");
 					String stackToEdit = scanner.next();
 					int stackIndex = -1;
@@ -109,20 +115,19 @@ public class Console {
 					}
 					if (stackIndex > -1) {
 						System.out.println();
-						editStack(stackToEdit);
+						editStack(stackToEdit, scanner);
 					} else {
 						System.out.println("Stack " + stackToEdit
 								+ " does not exist");
 						System.out.println();
 					}
 				} else
-					System.out.println("Currently no stacks to edit");
+					System.out.println("<<Stack bin is empty - no cards to edit>>\n");
 			} else if (startCommand.equals("viewstacks")) {
 				if (theStacks.size() > 0)
 					printStacks();
 				else {
-					System.out.println("<<Stack bin is empty>>");
-					System.out.println();
+					System.out.println("<<Stack bin is empty>>\n");
 				}
 			} else if (startCommand.equals("removestack")) {
 				System.out.print("Which stack would you like to remove? ");
@@ -155,15 +160,16 @@ public class Console {
 					e.printStackTrace();
 				}
 			} else
-				System.out.println("\nInvalid command");
+				System.out.println("Invalid command\n");			
 		}
-		scanner.close();
+		//scanner.close();
 	}
 
-	private static void editStack(String stackToEdit) {
+	private static void editStack(String stackToEdit, Scanner scanner) {
 		System.out.println("Card editor: " + stackToEdit);
-		printCommands("cardeditor");
-		Scanner scanner = new Scanner(System.in);
+		System.out.println(commandsToString("cardeditor"));
+		//scanner = new Scanner(System.in);
+		scanner.nextLine();
 		boolean end = false;
 
 		while (!end) {
@@ -219,7 +225,17 @@ public class Console {
 			} else
 				System.out.println("\nInvalid command");
 		}
-		scanner.close();
+		//scanner.close();
+	}
+	
+	public static void printWelcomeMessage() {
+		String commands = commandsToString("main");
+		
+		System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+				+ "Welcome to FlashCards\n"
+				+ "Type any of the following options to begin:\n\n"
+				+ commands
+				+ "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	}
 
 }
